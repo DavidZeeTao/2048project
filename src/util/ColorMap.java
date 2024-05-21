@@ -11,6 +11,12 @@ public class ColorMap {
     public static void InitialColorMap() {
         colorMap.put(1, Color.RED);
         colorMap.put(2, Color.ORANGE);
+        colorMap.put(4, Color.cyan);
+        colorMap.put(8, Color.GREEN);
+        colorMap.put(16, Color.MAGENTA);
+        colorMap.put(32, Color.blue);
+        colorMap.put(64, Color.CYAN);
+        colorMap.put(128, Color.pink);
     }
 
     public static Color getColor(int i) {

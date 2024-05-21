@@ -14,11 +14,13 @@ public class GameFrame extends JFrame {
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
+    private boolean loginstage;
 
-    public GameFrame(int width, int height) {
-        this.setTitle("2024 CS109 Project Demo");
+    public GameFrame(int width, int height,boolean loginstage) {
+        this.setTitle("2048 Game");
         this.setLayout(null);
         this.setSize(width, height);
+        this.loginstage = loginstage;
         ColorMap.InitialColorMap();
         gamePanel = new GamePanel((int) (this.getHeight() * 0.8));
         gamePanel.setLocation(this.getHeight() / 15, this.getWidth() / 15);
@@ -42,6 +44,7 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setVisible(true);
     }
 
 
@@ -61,5 +64,4 @@ public class GameFrame extends JFrame {
         this.add(label);
         return label;
     }
-
 }

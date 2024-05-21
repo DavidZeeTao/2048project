@@ -54,19 +54,35 @@ public class GamePanel extends ListenerPanel {
         repaint();
     }
 
-
-    /**
-     * Implement the abstract method declared in ListenerPanel.
-     * Do move right.
-     */
     @Override
     public void doMoveRight() {
         System.out.println("Click VK_RIGHT");
         this.afterMove();
         this.model.moveRight();
+        this.model.creatgrid();
         this.updateGridsNumber();
     }
-
+    public void doMoveLeft() {
+        System.out.println("Click VK_LEFT");
+        this.afterMove();
+        this.model.moveLeft();
+        this.model.creatgrid();
+        this.updateGridsNumber();
+    }
+    public void doMoveUp() {
+        System.out.println("Click VK_UP");
+        this.afterMove();
+        this.model.moveUp();
+        this.model.creatgrid();
+        this.updateGridsNumber();
+    }
+    public void doMoveDown() {
+        System.out.println("Click VK_DOWN");
+        this.afterMove();
+        this.model.moveDown();
+        this.model.creatgrid();
+        this.updateGridsNumber();
+    }
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
