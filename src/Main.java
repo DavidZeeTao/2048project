@@ -9,7 +9,7 @@ import java.util.TreeSet;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            WelcomeFrame welcomeFrame = new WelcomeFrame(700, 500);
+            WelcomeFrame welcomeFrame = new WelcomeFrame(700, 900,"Jungle",true);
 
         });
     }

@@ -1,9 +1,12 @@
 package view;
 
 import model.GridNumber;
+import util.FileUtil;
+import util.SoundEffect;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 
 public class GamePanel extends ListenerPanel {
@@ -32,6 +35,12 @@ public class GamePanel extends ListenerPanel {
         return model;
     }
 
+    public int getSteps() { return steps; }
+    public void setSteps(int steps){
+        this.steps = steps;
+        this.stepLabel.setText(String.format("Step: %d", this.steps));
+    }
+
     public void initialGame() {
         this.steps = 0;
         for (int i = 0; i < grids.length; i++) {
@@ -54,34 +63,53 @@ public class GamePanel extends ListenerPanel {
         repaint();
     }
 
+    public void autosave(String name){
+        String path = "src/file/game/"+name+".txt";
+        List<String> lines = model.convertGameToList();
+        lines.add(Integer.toString(steps));
+        FileUtil.writeFileFromList(path,lines);
+    }
+
     @Override
     public void doMoveRight() {
+        new SoundEffect("src/file/soundeffect/SoundEffect/ChessClick.wav");
         System.out.println("Click VK_RIGHT");
-        this.afterMove();
+        autosave("undo");
         this.model.moveRight();
         this.model.creatgrid();
         this.updateGridsNumber();
+        this.afterMove();
+        autosave("switchskin");
     }
     public void doMoveLeft() {
+        new SoundEffect("src/file/soundeffect/SoundEffect/ChessClick.wav");
         System.out.println("Click VK_LEFT");
-        this.afterMove();
+        autosave("undo");
         this.model.moveLeft();
         this.model.creatgrid();
         this.updateGridsNumber();
+        this.afterMove();
+        autosave("switchskin");
     }
     public void doMoveUp() {
+        new SoundEffect("src/file/soundeffect/SoundEffect/ChessClick.wav");
         System.out.println("Click VK_UP");
-        this.afterMove();
+        autosave("undo");
         this.model.moveUp();
         this.model.creatgrid();
         this.updateGridsNumber();
+        this.afterMove();
+        autosave("switchskin");
     }
     public void doMoveDown() {
+        new SoundEffect("src/file/soundeffect/SoundEffect/ChessClick.wav");
         System.out.println("Click VK_DOWN");
-        this.afterMove();
+        autosave("undo");
         this.model.moveDown();
         this.model.creatgrid();
         this.updateGridsNumber();
+        this.afterMove();
+        autosave("switchskin");
     }
     public void afterMove() {
         this.steps++;
@@ -90,5 +118,10 @@ public class GamePanel extends ListenerPanel {
 
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
+    }
+
+    public void clearSteps() {
+        this.steps = 0;
+        this.stepLabel.setText(String.format("Step: %d", this.steps));
     }
 }

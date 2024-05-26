@@ -1,6 +1,10 @@
 package model;
 
+import util.SoundEffect;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class GridNumber {
@@ -8,6 +12,7 @@ public class GridNumber {
     private final int Y_COUNT;
 
     private int[][] numbers;
+    StringBuilder sb = new StringBuilder();
 
     static Random random = new Random();
 
@@ -33,6 +38,14 @@ public class GridNumber {
         }
     }
 
+    public void clearnumbers() {
+        for (int i = 0; i < X_COUNT; i++) {
+            for (int j = 0; j < Y_COUNT; j++) {
+                numbers[i][j] = 0;
+            }
+        }
+    }
+
     public void moveRight() {
         int n = numbers.length;
         for (int i = 0; i < n; i++) {
@@ -45,6 +58,7 @@ public class GridNumber {
                         if (numbers[i][k] == 0) {
                             k++;
                         } else if (numbers[i][k] == numbers[i][j]) {
+                            new SoundEffect("src/file/soundeffect/SoundEffect/交换成功.wav");
                             // 合并相同数字
                             numbers[i][k] *= 2;
                             numbers[i][j] = 0;
@@ -77,6 +91,7 @@ public class GridNumber {
                         if (numbers[i][k] == 0) {
                             k--;
                         } else if (numbers[i][k] == numbers[i][j]) {
+                            new SoundEffect("src/file/soundeffect/SoundEffect/交换成功.wav");
                             // 合并相同数字
                             numbers[i][k] *= 2;
                             numbers[i][j] = 0;
@@ -109,6 +124,7 @@ public class GridNumber {
                         if (numbers[k][j] == 0) {
                             k--;
                         } else if (numbers[k][j] == numbers[i][j]) {
+                            new SoundEffect("src/file/soundeffect/SoundEffect/交换成功.wav");
                             // 合并相同数字
                             numbers[k][j] *= 2;
                             numbers[i][j] = 0;
@@ -141,6 +157,7 @@ public class GridNumber {
                         if (numbers[k][j] == 0) {
                             k++;
                         } else if (numbers[k][j] == numbers[i][j]) {
+                            new SoundEffect("src/file/soundeffect/SoundEffect/交换成功.wav");
                             // 合并相同数字
                             numbers[k][j] *= 2;
                             numbers[i][j] = 0;
@@ -165,20 +182,21 @@ public class GridNumber {
         int n = numbers.length;
         int randomnumber = random.nextInt(2);
         int add = (randomnumber == 0) ? 2 : 4;
-        while (true){
-            int rownumber=random.nextInt(n);
-            int colnumber=random.nextInt(n);
-            if(numbers[rownumber][colnumber]==0){
-                numbers[rownumber][colnumber]=add;
+        while (true) {
+            int rownumber = random.nextInt(n);
+            int colnumber = random.nextInt(n);
+            if (numbers[rownumber][colnumber] == 0) {
+                numbers[rownumber][colnumber] = add;
                 break;
             }
         }
     }
-    public boolean checknum(){
-        int n=numbers.length;
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                if(numbers[i][j]==0){
+
+    public boolean checknum() {
+        int n = numbers.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (numbers[i][j] == 0) {
                     return true;
                 }
             }
@@ -195,5 +213,29 @@ public class GridNumber {
         for (int[] line : numbers) {
             System.out.println(Arrays.toString(line));
         }
+    }
+
+    public List<String> convertGameToList() {
+        List<String> lines = new ArrayList<>();
+        for (int[] ints : this.numbers) {
+            sb.setLength(0);
+            for (int anInt : ints) {
+                sb.append(anInt).append(" ");
+            }
+            sb.setLength(sb.length() - 1);
+            lines.add(sb.toString());
+        }
+        return lines;
+    }
+
+    public int convertListToGame(List<String> lines) {
+        clearnumbers();
+        for (int i = 0; i < lines.size()-1; i++) {
+            String[] pieces = lines.get(i).split(" ");
+            for (int j = 0; j < pieces.length; j++) {
+                this.numbers[i][j] = Integer.parseInt(pieces[j]);
+            }
+        }
+        return Integer.parseInt(lines.get(lines.size()-1));
     }
 }
